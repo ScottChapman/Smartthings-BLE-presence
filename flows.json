@@ -1,0 +1,626 @@
+[
+    {
+        "id": "4d7ac2c2.f987fc",
+        "type": "tab",
+        "label": "Flow 1"
+    },
+    {
+        "id": "66842781.93a4d8",
+        "type": "tab",
+        "label": "Flow 2"
+    },
+    {
+        "id": "f12b3b93.96e338",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "abcbbc43.bcb5a",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard"
+    },
+    {
+        "id": "c4223dbd.4b757",
+        "type": "ui_group",
+        "z": "",
+        "name": "Presence",
+        "tab": "abcbbc43.bcb5a",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "5c2898e3.cb96b8",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "Helvetica Neue",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "Helvetica Neue",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "Helvetica Neue"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                }
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "5307f7fa.643de8",
+        "type": "ui_link",
+        "z": "",
+        "name": "google",
+        "link": "http://www.google.com",
+        "icon": "open_in_browser",
+        "target": "newtab",
+        "order": 1
+    },
+    {
+        "id": "2a4c037d.3c739c",
+        "type": "scan ble",
+        "z": "4d7ac2c2.f987fc",
+        "uuids": "",
+        "duplicates": false,
+        "name": "",
+        "x": 959.5,
+        "y": 336,
+        "wires": [
+            [
+                "6f94218e.165fd",
+                "f45edfc1.3aee1"
+            ]
+        ]
+    },
+    {
+        "id": "81369127.b0ba8",
+        "type": "debug",
+        "z": "4d7ac2c2.f987fc",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 1404.5,
+        "y": 363,
+        "wires": []
+    },
+    {
+        "id": "c44f4da4.dabfd",
+        "type": "inject",
+        "z": "4d7ac2c2.f987fc",
+        "name": "Scan Every 30 seconds",
+        "topic": "",
+        "payload": "on",
+        "payloadType": "str",
+        "repeat": "30",
+        "crontab": "",
+        "once": false,
+        "x": 231,
+        "y": 336,
+        "wires": [
+            [
+                "66983f72.106be"
+            ]
+        ]
+    },
+    {
+        "id": "66983f72.106be",
+        "type": "trigger",
+        "z": "4d7ac2c2.f987fc",
+        "op1": "on",
+        "op2": "off",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "28",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "name": "stop after 28 seconds",
+        "x": 512,
+        "y": 336,
+        "wires": [
+            [
+                "2f7f64ff.5f80ec"
+            ]
+        ]
+    },
+    {
+        "id": "2f7f64ff.5f80ec",
+        "type": "function",
+        "z": "4d7ac2c2.f987fc",
+        "name": "Scan Command",
+        "func": "if (msg.payload === 'on') {\n    msg.payload = { scan: true};\n} else {\n    msg.payload = { scan: false};\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 748,
+        "y": 336,
+        "wires": [
+            [
+                "2a4c037d.3c739c"
+            ]
+        ]
+    },
+    {
+        "id": "851b0756.1efc98",
+        "type": "switch",
+        "z": "4d7ac2c2.f987fc",
+        "name": "DeviceName",
+        "property": "localName",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "PebbleBee",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 1402.5,
+        "y": 259,
+        "wires": [
+            [
+                "1039afd1.ddd6a",
+                "c0cabc89.67e54",
+                "7089dbed.0b0a64"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "6f94218e.165fd",
+        "type": "function",
+        "z": "4d7ac2c2.f987fc",
+        "name": "Skip no-name devices",
+        "func": "if (msg.localName) {\n    return msg;\n}\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1186.5,
+        "y": 289,
+        "wires": [
+            [
+                "851b0756.1efc98",
+                "81369127.b0ba8"
+            ]
+        ]
+    },
+    {
+        "id": "f45edfc1.3aee1",
+        "type": "debug",
+        "z": "4d7ac2c2.f987fc",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 1195.5,
+        "y": 457,
+        "wires": []
+    },
+    {
+        "id": "1039afd1.ddd6a",
+        "type": "trigger",
+        "z": "4d7ac2c2.f987fc",
+        "op1": "",
+        "op2": "Absent!",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "10",
+        "extend": true,
+        "units": "min",
+        "reset": "",
+        "name": "",
+        "x": 1597,
+        "y": 203,
+        "wires": [
+            [
+                "67e4c8b7.56b088"
+            ]
+        ]
+    },
+    {
+        "id": "cc377c3d.a9a7d",
+        "type": "function",
+        "z": "66842781.93a4d8",
+        "name": "Present",
+        "func": "return {payload: \"present\"};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 398,
+        "y": 138,
+        "wires": [
+            [
+                "f8fa478f.a52738"
+            ]
+        ]
+    },
+    {
+        "id": "6ffe67f1.10a9d8",
+        "type": "function",
+        "z": "66842781.93a4d8",
+        "name": "Absent",
+        "func": "return {payload: \"not present\"};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 394,
+        "y": 228,
+        "wires": [
+            [
+                "f8fa478f.a52738"
+            ]
+        ]
+    },
+    {
+        "id": "f8fa478f.a52738",
+        "type": "mqtt out",
+        "z": "66842781.93a4d8",
+        "name": "Virtual Presence",
+        "topic": "smartthings/Virtual Presence/presence",
+        "qos": "0",
+        "retain": "true",
+        "broker": "f12b3b93.96e338",
+        "x": 592,
+        "y": 164,
+        "wires": []
+    },
+    {
+        "id": "87593df7.7f92a",
+        "type": "inject",
+        "z": "66842781.93a4d8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 234,
+        "y": 139,
+        "wires": [
+            [
+                "cc377c3d.a9a7d"
+            ]
+        ]
+    },
+    {
+        "id": "833d7417.7b9a28",
+        "type": "inject",
+        "z": "66842781.93a4d8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 252,
+        "y": 223,
+        "wires": [
+            [
+                "6ffe67f1.10a9d8"
+            ]
+        ]
+    },
+    {
+        "id": "c0cabc89.67e54",
+        "type": "function",
+        "z": "4d7ac2c2.f987fc",
+        "name": "Present",
+        "func": "return {payload: \"present\"};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1766,
+        "y": 255,
+        "wires": [
+            [
+                "72d5fbb5.71d1b4"
+            ]
+        ]
+    },
+    {
+        "id": "67e4c8b7.56b088",
+        "type": "function",
+        "z": "4d7ac2c2.f987fc",
+        "name": "Absent",
+        "func": "return {payload: \"not present\"};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1765,
+        "y": 204,
+        "wires": [
+            [
+                "72d5fbb5.71d1b4"
+            ]
+        ]
+    },
+    {
+        "id": "5860ec67.1e5bd4",
+        "type": "mqtt out",
+        "z": "4d7ac2c2.f987fc",
+        "name": "Virtual Presence",
+        "topic": "smartthings/Virtual Presence/presence",
+        "qos": "0",
+        "retain": "true",
+        "broker": "f12b3b93.96e338",
+        "x": 2192,
+        "y": 149,
+        "wires": []
+    },
+    {
+        "id": "ab5f7b53.697a78",
+        "type": "ui_text",
+        "z": "4d7ac2c2.f987fc",
+        "group": "c4223dbd.4b757",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Virtual Presence",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 2184,
+        "y": 291,
+        "wires": []
+    },
+    {
+        "id": "b5e2cad5.6db728",
+        "type": "debug",
+        "z": "4d7ac2c2.f987fc",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 2183,
+        "y": 225,
+        "wires": []
+    },
+    {
+        "id": "84aadd7a.cf97e",
+        "type": "inject",
+        "z": "4d7ac2c2.f987fc",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 1595,
+        "y": 117,
+        "wires": [
+            [
+                "67e4c8b7.56b088"
+            ]
+        ]
+    },
+    {
+        "id": "24b308c8.e01c18",
+        "type": "inject",
+        "z": "4d7ac2c2.f987fc",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 1594,
+        "y": 364,
+        "wires": [
+            [
+                "c0cabc89.67e54"
+            ]
+        ]
+    },
+    {
+        "id": "72d5fbb5.71d1b4",
+        "type": "rbe",
+        "z": "4d7ac2c2.f987fc",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "x": 1944,
+        "y": 232,
+        "wires": [
+            [
+                "5860ec67.1e5bd4",
+                "b5e2cad5.6db728",
+                "ab5f7b53.697a78",
+                "d53fd975.474f68",
+                "abac387b.f24fb8",
+                "4ba7aff8.91607"
+            ]
+        ]
+    },
+    {
+        "id": "78acc9d1.1d0b18",
+        "type": "e-mail",
+        "z": "66842781.93a4d8",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "name": "scott@chapman.us",
+        "dname": "email",
+        "x": 535,
+        "y": 411,
+        "wires": []
+    },
+    {
+        "id": "6972e48c.2fdc2c",
+        "type": "function",
+        "z": "66842781.93a4d8",
+        "name": "",
+        "func": "return {\n    payload: \"this is a test message\",\n    topic: \"testing\"\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 414,
+        "y": 363,
+        "wires": [
+            [
+                "78acc9d1.1d0b18"
+            ]
+        ]
+    },
+    {
+        "id": "d8b94dd5.ef41c",
+        "type": "inject",
+        "z": "66842781.93a4d8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 282,
+        "y": 408,
+        "wires": [
+            [
+                "6972e48c.2fdc2c"
+            ]
+        ]
+    },
+    {
+        "id": "d53fd975.474f68",
+        "type": "e-mail",
+        "z": "4d7ac2c2.f987fc",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "name": "scott@chapman.us",
+        "dname": "email",
+        "x": 2175,
+        "y": 366,
+        "wires": []
+    },
+    {
+        "id": "7089dbed.0b0a64",
+        "type": "debug",
+        "z": "4d7ac2c2.f987fc",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 1573,
+        "y": 306,
+        "wires": []
+    },
+    {
+        "id": "abac387b.f24fb8",
+        "type": "file",
+        "z": "4d7ac2c2.f987fc",
+        "name": "",
+        "filename": "output.txt",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "x": 2060,
+        "y": 412,
+        "wires": []
+    },
+    {
+        "id": "4ba7aff8.91607",
+        "type": "logger",
+        "z": "4d7ac2c2.f987fc",
+        "name": "Log",
+        "filename": "node-red.log",
+        "maxsize": "10",
+        "maxfiles": 10,
+        "complete": "payload",
+        "console": false,
+        "file": true,
+        "debug": false,
+        "zip": false,
+        "logtype": "info",
+        "x": 2037,
+        "y": 465,
+        "wires": []
+    }
+]
